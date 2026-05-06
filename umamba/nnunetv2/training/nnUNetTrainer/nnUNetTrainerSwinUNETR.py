@@ -48,6 +48,7 @@ class nnUNetTrainerSwinUNETR(nnUNetTrainerNoDeepSupervision):
         model = SwinUNETR(
             in_channels = num_input_channels,
             out_channels = label_manager.num_segmentation_heads,
+            img_size=img_size,
             num_heads = (3, 6, 12, 24),
             norm_name = "instance",
             drop_rate = 0.0,
