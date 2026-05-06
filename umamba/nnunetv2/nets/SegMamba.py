@@ -5,7 +5,7 @@ import torch.nn as nn
 from monai.networks.blocks.dynunet_block import UnetOutBlock
 from monai.networks.blocks.unetr_block import UnetrBasicBlock, UnetrUpBlock
 
-from mamba_ssm import Mamba
+from .vim_ver import Mamba
 
 
 # referencing to https://github.com/ge-xing/SegMamba/blob/main/model_segmamba/segmamba.py
