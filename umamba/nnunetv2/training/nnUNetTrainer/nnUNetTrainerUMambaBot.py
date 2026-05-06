@@ -25,3 +25,21 @@ class nnUNetTrainerUMambaBot(nnUNetTrainer):
         print("UMambaBot: {}".format(model))
 
         return model
+
+
+class nnUNetTrainerUMambaBotLr5e3(nnUNetTrainerUMambaBot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial_lr = 5e-3
+        
+        
+class nnUNetTrainerUMambaBotLr1e3(nnUNetTrainerUMambaBot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial_lr = 1e-3
+        
+
+class nnUNetTrainerUMambaBotLr5e4(nnUNetTrainerUMambaBot):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial_lr = 5e-4
