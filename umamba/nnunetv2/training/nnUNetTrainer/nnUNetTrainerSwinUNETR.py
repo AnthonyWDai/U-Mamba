@@ -9,6 +9,7 @@ from torch import nn
 
 from monai.networks.nets import SwinUNETR
 
+
 class nnUNetTrainerSwinUNETR(nnUNetTrainerNoDeepSupervision):
     """
     Swin-UNETR default configuration
