@@ -82,7 +82,6 @@ class nnUNetTrainerSwinUNETR(nnUNetTrainerNoDeepSupervision):
         
         return {'loss': l.detach().cpu().numpy()}
     
-
     def validation_step(self, batch: dict) -> dict:
         data = batch['data']
         target = batch['target']
@@ -155,3 +154,24 @@ class nnUNetTrainerSwinUNETR(nnUNetTrainerNoDeepSupervision):
     
     def set_deep_supervision_enabled(self, enabled: bool):
         pass
+    
+
+class nnUNetTrainerSwinUNETR1e4(nnUNetTrainerSwinUNETR):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.initial_lr = 1e-4
+        
+
+class nnUNetTrainerSwinUNETR5e4(nnUNetTrainerSwinUNETR):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.initial_lr = 5e-4
+        
+        
+class nnUNetTrainerSwinUNETR5e5(nnUNetTrainerSwinUNETR):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.initial_lr = 5e-5
