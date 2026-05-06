@@ -164,3 +164,29 @@ class nnUNetTrainerSwinUNETRV2(nnUNetTrainerNoDeepSupervision):
         pass
     
 
+class nnUNetTrainerSwinUNETRV2Lr1e3(nnUNetTrainerSwinUNETRV2):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.initial_lr = 1e-3
+        
+
+class nnUNetTrainerSwinUNETRV2Lr5e4(nnUNetTrainerSwinUNETRV2):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.initial_lr = 5e-4
+        
+        
+class nnUNetTrainerSwinUNETRV2Lr1e4(nnUNetTrainerSwinUNETRV2):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.initial_lr = 1e-4
+
+        
+class nnUNetTrainerSwinUNETRV2Lr5e5(nnUNetTrainerSwinUNETRV2):
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
+        self.initial_lr = 5e-5
