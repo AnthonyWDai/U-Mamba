@@ -39,6 +39,7 @@ class UpsampleLayer(nn.Module):
         x = self.conv(x)
         return x
 
+
 class MambaLayer(nn.Module):
     def __init__(self, dim, d_state = 16, d_conv = 4, expand = 2):
         super().__init__()
@@ -106,6 +107,7 @@ class BasicResBlock(nn.Module):
             x = self.conv3(x)
         y += x
         return self.act2(y)
+    
     
 class UNetResEncoder(nn.Module):
     def __init__(self,
@@ -370,7 +372,8 @@ class UNetResDecoder(nn.Module):
             if self.deep_supervision or (s == (len(self.stages) - 1)):
                 output += np.prod([self.num_classes, *skip_sizes[-(s+1)]], dtype=np.int64)
         return output
-    
+ 
+  
 class UMambaBot(nn.Module):
     def __init__(self,
                  input_channels: int,
