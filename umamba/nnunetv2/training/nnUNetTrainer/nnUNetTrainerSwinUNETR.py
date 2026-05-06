@@ -157,21 +157,21 @@ class nnUNetTrainerSwinUNETR(nnUNetTrainerNoDeepSupervision):
         pass
     
 
-class nnUNetTrainerSwinUNETR1e4(nnUNetTrainerSwinUNETR):
+class nnUNetTrainerSwinUNETRLr1e4(nnUNetTrainerSwinUNETR):
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
                  device: torch.device = torch.device('cuda')):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.initial_lr = 1e-4
         
 
-class nnUNetTrainerSwinUNETR5e4(nnUNetTrainerSwinUNETR):
+class nnUNetTrainerSwinUNETRLr5e4(nnUNetTrainerSwinUNETR):
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
                  device: torch.device = torch.device('cuda')):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.initial_lr = 5e-4
         
         
-class nnUNetTrainerSwinUNETR5e5(nnUNetTrainerSwinUNETR):
+class nnUNetTrainerSwinUNETRLr5e5(nnUNetTrainerSwinUNETR):
     def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
                  device: torch.device = torch.device('cuda')):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
