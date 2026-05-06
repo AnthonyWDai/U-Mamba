@@ -14,14 +14,16 @@ class nnUNetTrainerSwinUNETR(nnUNetTrainerNoDeepSupervision):
     """
     Swin-UNETR default configuration
     """
-    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
-                 device: torch.device = torch.device('cuda')):
+    def __init__(
+        self, plans: dict, configuration: str, fold: int, dataset_json: dict, 
+        unpack_dataset: bool = True, device: torch.device = torch.device('cuda')
+    ):
         super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         original_patch_size = self.configuration_manager.patch_size
         new_patch_size = [-1] * len(original_patch_size)
         for i in range(len(original_patch_size)):
-            if (original_patch_size[i] / 2**5) < 1 or ((original_patch_size[i] / 2**5) % 1) != 0:
-                new_patch_size[i] = round(original_patch_size[i] / 2**5 + 0.5) * 2**5
+            if (original_patch_size[i] / 32) < 1 or ((original_patch_size[i] / 32) % 1) != 0:
+                new_patch_size[i] = round(original_patch_size[i] / 32 + 0.5) * 32
             else:
                 new_patch_size[i] = original_patch_size[i]
         self.configuration_manager.configuration['patch_size'] = new_patch_size
@@ -46,7 +48,6 @@ class nnUNetTrainerSwinUNETR(nnUNetTrainerNoDeepSupervision):
         model = SwinUNETR(
             in_channels = num_input_channels,
             out_channels = label_manager.num_segmentation_heads,
-            img_size = img_size,
             num_heads = (3, 6, 12, 24),
             norm_name = "instance",
             drop_rate = 0.0,
