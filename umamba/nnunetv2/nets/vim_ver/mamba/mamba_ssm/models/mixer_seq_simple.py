@@ -8,11 +8,14 @@ from collections import namedtuple
 import torch
 import torch.nn as nn
 
-from ..modules.mamba_simple import Mamba, Block
-from ..utils.generation import GenerationMixin
-from ..utils.hf import load_config_hf, load_state_dict_hf
+from mamba_ssm.modules.mamba_simple import Mamba, Block
+from mamba_ssm.utils.generation import GenerationMixin
+from mamba_ssm.utils.hf import load_config_hf, load_state_dict_hf
 
-from ..ops.triton.layernorm import RMSNorm, layer_norm_fn, rms_norm_fn
+try:
+    from mamba_ssm.ops.triton.layernorm import RMSNorm, layer_norm_fn, rms_norm_fn
+except ImportError:
+    RMSNorm, layer_norm_fn, rms_norm_fn = None, None, None
 
 
 def create_block(

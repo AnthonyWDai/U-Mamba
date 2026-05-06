@@ -11,7 +11,7 @@ import torch.nn.functional as F
 from einops import rearrange, repeat
 from torch import Tensor
 from torch.profiler import ProfilerActivity, profile, record_function
-from transformers.generation import GenerateDecoderOnlyOutput
+from transformers.generation import GreedySearchDecoderOnlyOutput, SampleDecoderOnlyOutput
 
 
 @dataclass
@@ -196,10 +196,9 @@ def decode(
             torch.distributed.barrier()
         torch.cuda.synchronize()
         print(f"Prompt processing + decoding time: {(start.elapsed_time(end)):.0f}ms")
-    return GenerateDecoderOnlyOutput(
-        sequences=torch.cat(sequences, dim=1),
-        scores=tuple(scores),
-    )
+    output_cls = GreedySearchDecoderOnlyOutput if top_k == 1 else SampleDecoderOnlyOutput
+    return output_cls(sequences=torch.cat(sequences, dim=1), scores=tuple(scores))
+
 
 class GenerationMixin:
     def allocate_inference_cache(self, batch_size, max_seqlen, dtype=None, **kwargs):
