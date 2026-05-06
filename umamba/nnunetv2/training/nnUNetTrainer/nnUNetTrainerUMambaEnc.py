@@ -1,5 +1,6 @@
 from nnunetv2.training.nnUNetTrainer.nnUNetTrainer import nnUNetTrainer
 from nnunetv2.utilities.plans_handling.plans_handler import ConfigurationManager, PlansManager
+import torch
 from torch import nn
 from nnunetv2.nets.UMambaEnc_3d import get_umamba_enc_3d_from_plans
 from nnunetv2.nets.UMambaEnc_2d import get_umamba_enc_2d_from_plans
@@ -28,18 +29,21 @@ class nnUNetTrainerUMambaEnc(nnUNetTrainer):
 
 
 class nnUNetTrainerUMambaEncLr5e3(nnUNetTrainerUMambaEnc):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.initial_lr = 5e-3
         
         
 class nnUNetTrainerUMambaEncLr1e3(nnUNetTrainerUMambaEnc):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.initial_lr = 1e-3
         
 
 class nnUNetTrainerUMambaEncLr5e4(nnUNetTrainerUMambaEnc):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, plans: dict, configuration: str, fold: int, dataset_json: dict, unpack_dataset: bool = True,
+                 device: torch.device = torch.device('cuda')):
+        super().__init__(plans, configuration, fold, dataset_json, unpack_dataset, device)
         self.initial_lr = 5e-4
