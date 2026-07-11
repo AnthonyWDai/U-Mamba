@@ -71,6 +71,51 @@ class NoNormalization(ImageNormalization):
         return image.astype(self.target_dtype)
 
 
+class CTPETNormalization(ImageNormalization):
+    leaves_pixels_outside_mask_at_zero_if_use_mask_for_norm_is_true = False
+
+    def run(self, image: np.ndarray, seg: np.ndarray = None) -> np.ndarray:
+        if self.intensityproperties is None:
+            raise ValueError("CTPETNormalization requires intensity properties")
+
+        eps = 1e-4 if self.target_dtype == np.float16 else 1e-8
+
+        lower = self.intensityproperties.get("lower")
+        upper = self.intensityproperties.get("upper")
+
+        has_valid_dataset_bounds = (
+            lower is not None
+            and upper is not None
+            and np.isfinite(lower)
+            and np.isfinite(upper)
+            and lower < upper
+        )
+
+        if has_valid_dataset_bounds:
+            clip_low = float(lower)
+            clip_high = float(upper)
+        else:
+            # Fallback to robust image-specific percentiles
+            clip_low = float(np.percentile(image, 0.5))
+            clip_high = float(np.percentile(image, 99.5))
+            warnings("Fallback to robust image-specific percentiles")
+
+        # Final safeguard for degenerate bounds
+        if not np.isfinite(clip_low) or not np.isfinite(clip_high) or clip_low >= clip_high:
+            image = image.astype(self.target_dtype, copy=False)
+            image.fill(0)
+            return image
+
+        image = image.astype(self.target_dtype, copy=False)
+        np.clip(image, clip_low, clip_high, out=image)
+
+        # Normalize to [0, 1]
+        image -= clip_low
+        image /= max(clip_high - clip_low, eps)
+
+        return image
+
+
 class RescaleTo01Normalization(ImageNormalization):
     leaves_pixels_outside_mask_at_zero_if_use_mask_for_norm_is_true = False
 
